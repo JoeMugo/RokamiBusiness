@@ -46,14 +46,46 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Hero slider images - using your actual room images
+// Hero slider images - Living room and bedroom only (no washroom)
 const heroImages = [
     'assets/images/rooms/Living Room 1.jpeg',
+    'assets/images/rooms/Living Room 2.jpeg',
     'assets/images/rooms/Bedroom.jpeg',
+    'assets/images/rooms/Bedroom 2.jpeg',
     'assets/images/rooms/Study Area.jpeg',
-    'assets/images/rooms/Kitchen.jpeg',
-    'assets/images/rooms/Washroom 1.jpeg'
-].map(img => img.replace(/ /g, '%20')); // Ensure spaces are URL-encoded
+    'assets/images/rooms/Kitchen.jpeg'
+].map(img => img.replace(/ /g, '%20'));
+
+// All gallery images
+const galleryImages = [
+    'gallery/Living%20Room%201.jpeg',
+    'gallery/Living%20Room%202.jpeg',
+    'gallery/Living%20Room%203.jpeg',
+    'gallery/Living%20Room%204.jpeg',
+    'gallery/Living%20Room%205.jpeg',
+    'gallery/Living%20Room.jpeg',
+    'gallery/Bedroom.jpeg',
+    'gallery/Bedroom%202.jpeg',
+    'gallery/Bedroom%203.jpeg',
+    'gallery/Bedroom%204.jpeg',
+    'gallery/Bedroom%205.jpeg',
+    'gallery/Bedroom%2035.jpeg',
+    'gallery/Kitchen.jpeg',
+    'gallery/Study%20Area.jpeg',
+    'gallery/Study%20Area%202.jpeg',
+    'gallery/Study%20Area%203.jpeg',
+    'gallery/Stairway.jpeg',
+    'gallery/Stairway%202.jpeg',
+    'gallery/Stairway%203.jpeg',
+    'gallery/Stairway%204.jpeg',
+    'gallery/Stairway%205.jpeg',
+    'gallery/Washroom.jpeg',
+    'gallery/Washroom%201.jpeg',
+    'gallery/Washroom%202.jpeg',
+    'gallery/Washroom%203.jpeg',
+    'gallery/Washroom%204.jpeg',
+    'gallery/Washroom5.jpeg'
+];
 
 // Initialize Swiper for hero slider
 const initHeroSlider = () => {
@@ -249,20 +281,6 @@ const locationInfo = {
         { name: 'Westlands & Gigiri', distance: '15 minutes' }
     ]
 };
-
-// Property gallery images - using your actual room images (URL encoded for spaces)
-const galleryImages = [
-    'gallery/Living%20Room%201.jpeg',
-    'gallery/Living%20Room%202.jpeg',
-    'gallery/Living%20Room%203.jpeg',
-    'gallery/Bedroom.jpeg',
-    'gallery/Bedroom%202.jpeg',
-    'gallery/Kitchen.jpeg',
-    'gallery/Study%20Area.jpeg',
-    'gallery/Washroom%201.jpeg',
-    'gallery/Stairway.jpeg'
-];
-
 
 // Guest reviews - Real reviews from Google & Airbnb
 const reviews = [
@@ -563,8 +581,11 @@ const renderRoomSections = () => {
                 </div>
                 <div class="room-section-images ${isSingleImage ? 'single-image' : ''}">
                     ${section.images.map(img => `
-                        <div class="room-section-image">
+                        <div class="room-section-image clickable-image" data-image="assets/images/${img}" data-caption="${section.name}">
                             <img src="assets/images/${img}" alt="${section.name}" loading="lazy">
+                            <div class="overlay">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
                         </div>
                     `).join('')}
                 </div>
@@ -572,6 +593,9 @@ const renderRoomSections = () => {
             </div>
         `;
     }).join('');
+    
+    // Add click handlers for room section images
+    initClickableImages();
 };
 
 // Render amenities
@@ -683,6 +707,52 @@ const initGalleryLightbox = () => {
         if (currentImageIndex >= galleryImages.length) currentImageIndex = 0;
         openLightbox();
     }
+};
+
+// Initialize clickable images (for room sections and other areas)
+const initClickableImages = () => {
+    const clickableImages = document.querySelectorAll('.clickable-image');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const lightboxClose = document.getElementById('lightbox-close');
+    const lightboxPrev = document.getElementById('lightbox-prev');
+    const lightboxNext = document.getElementById('lightbox-next');
+    
+    if (!lightbox || !clickableImages.length) return;
+    
+    clickableImages.forEach(item => {
+        item.addEventListener('click', () => {
+            const imageSrc = item.dataset.image;
+            const caption = item.dataset.caption || '';
+            
+            lightboxImg.src = imageSrc;
+            lightboxCaption.textContent = caption;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Hide navigation for single images
+            lightboxPrev.style.display = 'none';
+            lightboxNext.style.display = 'none';
+        });
+    });
+    
+    // Close on click
+    lightboxClose.addEventListener('click', () => {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+        lightboxPrev.style.display = '';
+        lightboxNext.style.display = '';
+    });
+    
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+            lightboxPrev.style.display = '';
+            lightboxNext.style.display = '';
+        }
+    });
 };
 
 // Render reviews
