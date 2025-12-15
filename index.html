@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rokami BnB - Luxury Accommodation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">Rokami BnB</a>
+            <div class="nav-links">
+                <a href="#home" class="active">Home</a>
+                <a href="#rooms">Rooms</a>
+                <a href="#gallery">Gallery</a>
+                <a href="#reviews">Reviews</a>
+                <a href="#contact" class="book-now">Book Now</a>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Rokami Loft - Your Home in Ruaka</h1>
+            <p>1 Bedroom Apartment with Parking, Security & High-Speed Internet</p>
+            <div class="hero-features">
+                <span><i class="fas fa-wifi"></i> Free WiFi</span>
+                <span><i class="fas fa-parking"></i> Secure Parking</span>
+                <span><i class="fas fa-utensils"></i> Fully Equipped Kitchen</span>
+            </div>
+            <div class="hero-buttons">
+                <a href="#booking" class="btn btn-primary">Book Direct & Save</a>
+                <a href="https://airbnb.com/h/rokamiloft" target="_blank" class="btn btn-secondary">View on Airbnb</a>
+            </div>
+        </div>
+        <div class="swiper hero-slider">
+            <div class="swiper-wrapper">
+                <!-- Slides will be added dynamically via JavaScript -->
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section-padding-lg">
+        <div class="container">
+            <div class="section-header">
+                <h2>Welcome to Rokami Loft</h2>
+                <p>Your serene escape in Ruaka, Nairobi</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>Discover the epitome of quiet and serene at Rokami Loft, a stunning 1-bedroom loft nestled in a peaceful estate. Our loft is more than just a place to stay; it's an experience designed for those who appreciate spacious and beautifully crafted spaces.</p>
+                    <p class="about-highlight">Located at Joyland, Ruaka, off Limuru Road - just minutes away from Two Rivers Mall, Village Market, and Westlands.</p>
+                    <div class="features">
+                        <div class="feature">
+                            <i class="fas fa-wifi"></i>
+                            <span>High-Speed WiFi</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-parking"></i>
+                            <span>Free Parking (2 floors)</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-utensils"></i>
+                            <span>Fully Equipped Kitchen</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-tv"></i>
+                            <span>Smart TV</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-elevator"></i>
+                            <span>Elevator Access</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>24/7 Security</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <!-- Image will be set via CSS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Host Section -->
+    <section id="host" class="section-padding-sm">
+        <div class="container">
+            <div class="host-card">
+                <div class="host-avatar">
+                    <img src="assets/images/host/Host.JPG" alt="Hope - Your Host">
+                    <span class="superhost-badge"><i class="fas fa-award"></i></span>
+                </div>
+                <div class="host-info">
+                    <h3>Hosted by Hope</h3>
+                    <div class="host-badges">
+                        <span class="badge superhost"><i class="fas fa-medal"></i> Superhost</span>
+                        <span class="badge verified"><i class="fas fa-check-circle"></i> Identity Verified</span>
+                    </div>
+                    <div class="host-stats">
+                        <div class="stat">
+                            <strong>53</strong>
+                            <span>Reviews</span>
+                        </div>
+                        <div class="stat">
+                            <strong>4.92</strong>
+                            <span>Rating</span>
+                        </div>
+                        <div class="stat">
+                            <strong>4</strong>
+                            <span>Years Hosting</span>
+                        </div>
+                    </div>
+                    <p class="host-response"><i class="fas fa-clock"></i> <strong>100% response rate</strong> · Responds within an hour</p>
+                    <p class="host-languages"><i class="fas fa-globe"></i> Speaks English and Swahili</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rooms Section -->
+    <section id="rooms" class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Rooms</h2>
+                <p>Luxurious accommodations for your perfect stay</p>
+            </div>
+            <div class="rooms-grid" id="rooms-container">
+                <!-- Rooms will be loaded dynamically via JavaScript -->
+            </div>
+            <!-- Room Sections -->
+            <div id="room-sections-container" class="room-sections">
+                <!-- Room sections will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Amenities Section -->
+    <section id="amenities" class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2>What This Place Offers</h2>
+                <p>Everything you need for a comfortable stay</p>
+            </div>
+            <div class="amenities-grid" id="amenities-container">
+                <!-- Amenities will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- House Rules Section -->
+    <section id="house-rules" class="section-padding-sm">
+        <div class="container">
+            <div class="rules-container">
+                <div class="rules-card">
+                    <h3><i class="fas fa-clipboard-list"></i> House Rules</h3>
+                    <p class="rules-intro">You'll be staying in someone's home, so please treat it with care and respect.</p>
+                    
+                    <div class="rules-section">
+                        <h4><i class="fas fa-clock"></i> Checking In & Out</h4>
+                        <ul>
+                            <li><strong>Check-in:</strong> 1:00 PM - 10:00 PM</li>
+                            <li><strong>Checkout:</strong> Before 10:00 AM</li>
+                            <li><strong>Self check-in</strong> with lockbox</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="rules-section">
+                        <h4><i class="fas fa-home"></i> During Your Stay</h4>
+                        <ul>
+                            <li>2 guests maximum</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="rules-section">
+                        <h4><i class="fas fa-door-open"></i> Before You Leave</h4>
+                        <ul>
+                            <li>Turn things off</li>
+                            <li>Return keys</li>
+                            <li>Lock up</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="location-card">
+                    <h3><i class="fas fa-map-marker-alt"></i> Location</h3>
+                    <p class="location-address"><strong>Joyland, Ruaka</strong></p>
+                    <p>The house is located at Joyland Ruaka. It has 2 parking floors and lift access to the house.</p>
+                    
+                    <div class="nearby-places">
+                        <h4>Nearby Attractions</h4>
+                        <ul>
+                            <li><i class="fas fa-shopping-bag"></i> Two Rivers Mall - 5 min</li>
+                            <li><i class="fas fa-shopping-bag"></i> Village Market Mall - 10 min</li>
+                            <li><i class="fas fa-shopping-bag"></i> Rosslyn Riviera Mall - 10 min</li>
+                            <li><i class="fas fa-building"></i> Westlands & Gigiri - 15 min</li>
+                        </ul>
+                    </div>
+                    
+                    <a href="https://maps.app.goo.gl/aXv9h3YKhxnkf2Sj8" target="_blank" class="btn btn-primary">
+                        <i class="fas fa-directions"></i> Get Directions
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="section-padding-sm">
+        <div class="container">
+            <div class="section-header">
+                <h2>Gallery</h2>
+                <p>Explore our beautiful spaces</p>
+            </div>
+            <div class="gallery-grid" id="gallery-container">
+                <!-- Gallery items will be loaded dynamically via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="reviews" class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2>Guest Reviews</h2>
+                <p>What our guests say about their stay</p>
+            </div>
+            <div class="reviews-slider swiper">
+                <div class="swiper-wrapper" id="reviews-container">
+                    <!-- Reviews will be loaded dynamically via JavaScript -->
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="booking" class="section-padding-lg">
+        <div class="container">
+            <div class="booking-container">
+                <div class="booking-form">
+                    <h2>Book Your Stay</h2>
+                    <form id="booking-form">
+                        <div class="form-group">
+                            <label for="guest-name">Your Name</label>
+                            <input type="text" id="guest-name" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="check-in">Check-in</label>
+                            <input type="date" id="check-in" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="check-out">Check-out</label>
+                            <input type="date" id="check-out" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="guests">Guests</label>
+                            <select id="guests" required>
+                                <option value="1">1 Guest</option>
+                                <option value="2" selected>2 Guests</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Check Availability</button>
+                    </form>
+                </div>
+                <div class="booking-info">
+                    <h3>Why Book With Us?</h3>
+                    <ul>
+                        <li>Best Price Guarantee</li>
+                        <li>No Booking Fees</li>
+                        <li>Free Cancellation</li>
+                        <li>24/7 Customer Support</li>
+                    </ul>
+                    <div class="contact-info">
+                        <p><i class="fab fa-whatsapp"></i> <a href="https://wa.me/254797819688" style="color: var(--accent-light);">+254 797 819 688</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <h3>Rokami Loft</h3>
+                    <p>A serene 1-bedroom loft in Ruaka, Nairobi. Perfect for those who appreciate quiet, spacious, and beautifully crafted spaces.</p>
+                    <div class="social-links">
+                        <a href="https://web.facebook.com/rokamifurnishedapartment/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/rokami_apartments/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/254797819688" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://airbnb.com/h/rokamiloft" target="_blank" aria-label="Airbnb"><i class="fab fa-airbnb"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#rooms">Rooms</a></li>
+                        <li><a href="#amenities">Amenities</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
+                        <li><a href="#reviews">Reviews</a></li>
+                        <li><a href="#booking">Book Now</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> Joyland, Ruaka, Nairobi</p>
+                    <p><i class="fab fa-whatsapp"></i> <a href="https://wa.me/254797819688">+254 797 819 688</a></p>
+                    <p><i class="fas fa-directions"></i> <a href="https://maps.app.goo.gl/aXv9h3YKhxnkf2Sj8" target="_blank">Get Directions</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Rokami Loft. All rights reserved.</p>
+                <p class="developer-credit">Website developed by <a href="https://joelmugo.netlify.app/" target="_blank">Joel Mugo</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox for Gallery -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightbox-close">&times;</button>
+            <button class="lightbox-nav lightbox-prev" id="lightbox-prev"><i class="fas fa-chevron-left"></i></button>
+            <img src="" alt="Gallery Image" id="lightbox-img">
+            <button class="lightbox-nav lightbox-next" id="lightbox-next"><i class="fas fa-chevron-right"></i></button>
+            <p class="lightbox-caption" id="lightbox-caption"></p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
