@@ -139,8 +139,12 @@ const initAboutGallerySlider = () => {
         effect: 'fade',
         speed: 800,
         autoplay: {
-            delay: 2000,
+            delay: 1000,
             disableOnInteraction: false,
+        },
+        navigation: {
+            nextEl: '.about-gallery-next',
+            prevEl: '.about-gallery-prev',
         },
     });
 
@@ -292,11 +296,12 @@ const amenities = {
         title: 'Bathroom & Kitchen',
         icon: 'fas fa-bath',
         items: [
-            'Cleaning products & Shampoo',
-            'Conditioner & Body soap',
             'Hot water & Shower gel',
+            'Conditioner & Body soap',
             'Fully equipped kitchen',
-            'Space to cook your own meals'
+            'Washing machine',
+            'Tea bags & Sugar',
+            'Housekeeping available'
         ]
     },
     safety: {
@@ -860,7 +865,10 @@ const renderReviews = () => {
         return '';
     };
 
-    reviewsContainer.innerHTML = reviews.map(review => `
+    // Sort reviews by text length (longest first)
+    const sortedReviews = [...reviews].sort((a, b) => b.text.length - a.text.length);
+
+    reviewsContainer.innerHTML = sortedReviews.map(review => `
         <div class="swiper-slide">
             <div class="review-card">
                 <div class="review-source ${review.source?.toLowerCase() || ''}">
@@ -898,8 +906,9 @@ const initReviewsSlider = () => {
         spaceBetween: 30,
         loop: true,
         autoplay: {
-            delay: 5000,
+            delay: 4000,
             disableOnInteraction: false,
+            pauseOnMouseEnter: false,
         },
         pagination: {
             el: '.reviews-slider .swiper-pagination',
