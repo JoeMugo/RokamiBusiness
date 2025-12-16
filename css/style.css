@@ -114,15 +114,15 @@ ul {
 }
 
 .section-padding {
-    padding: 2.5rem 0;
+    padding: 1.5rem 0;
 }
 
 .section-padding-lg {
-    padding: var(--spacing-xl) 0;
+    padding: 2rem 0;
 }
 
 .section-padding-sm {
-    padding: 1.5rem 0;
+    padding: 1rem 0;
 }
 
 .bg-light {
@@ -280,8 +280,8 @@ ul {
 /* Hero Section */
 .hero {
     position: relative;
-    height: 100vh;
-    min-height: 600px;
+    height: 70vh;
+    min-height: 450px;
     background: var(--primary);
     color: var(--white);
     display: flex;
@@ -1540,13 +1540,13 @@ ul {
 .review-text {
     color: #444;
     line-height: 1.5;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     font-size: 0.9rem;
-    max-height: 80px;
+    max-height: 60px;
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
 }
 
@@ -1555,12 +1555,79 @@ ul {
     margin: 0;
 }
 
+.read-more-btn {
+    color: var(--accent);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+.read-more-btn:hover {
+    color: var(--secondary);
+    text-decoration: underline;
+}
+
 .review-date {
     font-size: 0.8rem;
     color: var(--gray);
     border-top: 1px solid var(--light-gray);
     padding-top: 0.5rem;
     margin-top: auto;
+}
+
+/* Review Modal */
+.review-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.review-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.review-modal-content {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: var(--border-radius-lg);
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.review-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--gray);
+}
+
+.review-modal-close:hover {
+    color: var(--primary);
+}
+
+.review-modal-content .review-text {
+    max-height: none;
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    display: block;
 }
 
 /* Booking Section */
@@ -1947,15 +2014,54 @@ ul {
         grid-template-columns: 1fr;
     }
     
+    /* Mobile Footer - Compact */
+    .footer {
+        padding: 1rem 0 0;
+    }
+    
     .footer-content {
         grid-template-columns: 1fr;
-        gap: var(--spacing-md);
+        gap: 1rem;
     }
     
     .footer-about,
     .footer-links,
     .footer-contact {
-        margin-bottom: var(--spacing-md);
+        margin-bottom: 0.5rem;
+    }
+    
+    .footer-about p {
+        margin-bottom: 0.5rem;
+        font-size: 0.85rem;
+    }
+    
+    .footer-about h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .footer-links h4,
+    .footer-contact h4 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .footer-links ul li {
+        margin-bottom: 0.3rem;
+    }
+    
+    .social-links {
+        gap: 0.5rem;
+    }
+    
+    .social-links a {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .footer-bottom {
+        padding: 0.75rem 0;
+        margin-top: 1rem;
     }
 }
 

@@ -868,7 +868,7 @@ const renderReviews = () => {
     // Sort reviews by text length (longest first)
     const sortedReviews = [...reviews].sort((a, b) => b.text.length - a.text.length);
 
-    reviewsContainer.innerHTML = sortedReviews.map(review => `
+    reviewsContainer.innerHTML = sortedReviews.map((review, index) => `
         <div class="swiper-slide">
             <div class="review-card">
                 <div class="review-source ${review.source?.toLowerCase() || ''}">
@@ -891,12 +891,16 @@ const renderReviews = () => {
                 <div class="review-text">
                     <p>"${review.text}"</p>
                 </div>
+                ${review.text.length > 80 ? `<span class="read-more-btn" data-review-index="${index}">Read more</span>` : ''}
                 <div class="review-date">
                     ${new Date(review.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}
                 </div>
             </div>
         </div>
     `).join('');
+
+    // Store sorted reviews for modal access
+    window.sortedReviews = sortedReviews;
 };
 
 // Initialize reviews slider
@@ -923,6 +927,68 @@ const initReviewsSlider = () => {
             }
         }
     });
+};
+
+// Initialize review modal
+const initReviewModal = () => {
+    const modal = document.getElementById('review-modal');
+    const closeBtn = document.getElementById('review-modal-close');
+    
+    if (!modal) return;
+    
+    // Handle Read more clicks
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('read-more-btn')) {
+            const index = parseInt(e.target.dataset.reviewIndex);
+            const review = window.sortedReviews[index];
+            if (review) {
+                openReviewModal(review);
+            }
+        }
+    });
+    
+    // Close modal
+    closeBtn.addEventListener('click', () => {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    });
+    
+    // Close on background click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+};
+
+// Open review modal with full content
+const openReviewModal = (review) => {
+    const modal = document.getElementById('review-modal');
+    const header = document.getElementById('modal-review-header');
+    const rating = document.getElementById('modal-review-rating');
+    const text = document.getElementById('modal-review-text');
+    const date = document.getElementById('modal-review-date');
+    
+    const getInitials = (name) => name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+    const getStarRating = (r) => '★'.repeat(r) + '☆'.repeat(5 - r);
+    
+    header.innerHTML = `
+        <div class="review-avatar avatar-initials">
+            <span>${getInitials(review.name)}</span>
+        </div>
+        <div class="reviewer-info">
+            <h4>${review.name}</h4>
+            ${review.location ? `<span class="reviewer-location"><i class="fas fa-map-marker-alt"></i> ${review.location}</span>` : ''}
+        </div>
+    `;
+    
+    rating.innerHTML = `${getStarRating(review.rating)} <span class="rating-text">${review.rating}/5</span>`;
+    text.innerHTML = `<p>"${review.text}"</p>`;
+    date.textContent = new Date(review.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
 };
 
 // Handle booking form submission
@@ -997,6 +1063,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderGallery();
     renderReviews();
     initReviewsSlider();
+    initReviewModal(); // Initialize review modal for Read more
     initAboutGallerySlider(); // Initialize about section gallery slider
     
     // Initialize inline currency selectors
