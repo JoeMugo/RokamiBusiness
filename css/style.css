@@ -239,6 +239,28 @@ ul {
     color: var(--white) !important;
 }
 
+/* Book Now Button in Navbar */
+.book-now-btn {
+    background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
+    color: var(--white) !important;
+    padding: 0.6rem 1.5rem !important;
+    border-radius: 50px;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 15px rgba(154, 82, 17, 0.3);
+    text-decoration: none;
+}
+
+.book-now-btn:hover {
+    background: linear-gradient(135deg, var(--copper) 0%, var(--secondary) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(154, 82, 17, 0.4);
+    color: var(--white) !important;
+}
+
+.book-now-btn::after {
+    display: none !important;
+}
+
 .hamburger {
     display: none;
     flex-direction: column;
@@ -493,6 +515,25 @@ ul {
     position: relative;
 }
 
+/* About Gallery Slider */
+.about-gallery-slider {
+    height: 500px;
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(11, 43, 57, 0.15);
+}
+
+.about-gallery-slider .swiper-slide {
+    width: 100%;
+    height: 100%;
+}
+
+.about-gallery-slider .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .about-image::after {
     content: '';
     position: absolute;
@@ -646,6 +687,10 @@ ul {
     background: linear-gradient(180deg, var(--white) 0%, var(--light) 100%);
 }
 
+#rooms .section-header {
+    margin-bottom: 1.5rem;
+}
+
 .currency-selector {
     display: flex;
     align-items: center;
@@ -795,6 +840,48 @@ ul {
     letter-spacing: 0.5px;
 }
 
+/* Price row with inline currency selector */
+.room-price-row {
+    margin: 1rem 0;
+}
+
+.price-with-currency {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.room-price-display {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--secondary);
+}
+
+.room-price-display small {
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: var(--gray);
+}
+
+.currency-select-inline {
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--light-gray);
+    border-radius: 50px;
+    background: var(--white);
+    color: var(--primary);
+    font-weight: 500;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.currency-select-inline:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(216, 141, 33, 0.15);
+}
+
 @media (max-width: 768px) {
     .room-card {
         grid-template-columns: 1fr;
@@ -911,8 +998,26 @@ ul {
 
 .amenities-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
+}
+
+@media (max-width: 1200px) {
+    .amenities-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .amenities-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .amenities-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .amenity-category {

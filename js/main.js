@@ -46,14 +46,9 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Hero slider images - Living room and bedroom only (no washroom)
+// Hero slider images - Only bedroom image for landing page
 const heroImages = [
-    'assets/images/rooms/Living Room 1.jpeg',
-    'assets/images/rooms/Living Room 2.jpeg',
-    'assets/images/rooms/Bedroom.jpeg',
-    'assets/images/rooms/Bedroom 2.jpeg',
-    'assets/images/rooms/Study Area.jpeg',
-    'assets/images/rooms/Kitchen.jpeg'
+    'assets/images/rooms/Bedroom.jpeg'
 ].map(img => img.replace(/ /g, '%20'));
 
 // All gallery images
@@ -89,26 +84,8 @@ const galleryImages = [
 
 // Initialize Swiper for hero slider
 const initHeroSlider = () => {
-    const heroSlider = new Swiper('.hero-slider', {
-        loop: true,
-        effect: 'fade',
-        speed: 1000,
-        autoplay: {
-            delay: 5000,
-            disableOnInteraction: false,
-        },
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-    });
-
-    // Add hero images to the slider
-    const heroSliderWrapper = document.querySelector('.swiper-wrapper');
+    // Add hero images to the slider first
+    const heroSliderWrapper = document.querySelector('.hero-slider .swiper-wrapper');
     if (heroSliderWrapper) {
         heroImages.forEach(image => {
             const slide = document.createElement('div');
@@ -117,6 +94,48 @@ const initHeroSlider = () => {
             heroSliderWrapper.appendChild(slide);
         });
     }
+
+    const heroSlider = new Swiper('.hero-slider', {
+        loop: heroImages.length > 1,
+        effect: 'fade',
+        speed: 1000,
+        autoplay: heroImages.length > 1 ? {
+            delay: 5000,
+            disableOnInteraction: false,
+        } : false,
+        pagination: {
+            el: '.hero-slider .swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.hero-slider .swiper-button-next',
+            prevEl: '.hero-slider .swiper-button-prev',
+        },
+    });
+};
+
+// Initialize About Gallery Slider (auto-swipe every 2 seconds)
+const initAboutGallerySlider = () => {
+    const aboutGalleryWrapper = document.getElementById('about-gallery-wrapper');
+    if (!aboutGalleryWrapper) return;
+
+    // Add all gallery images to the about slider
+    galleryImages.forEach(image => {
+        const slide = document.createElement('div');
+        slide.className = 'swiper-slide';
+        slide.innerHTML = `<img src="assets/images/${image}" alt="Gallery Image" loading="lazy">`;
+        aboutGalleryWrapper.appendChild(slide);
+    });
+
+    const aboutGallerySlider = new Swiper('.about-gallery-slider', {
+        loop: true,
+        effect: 'fade',
+        speed: 800,
+        autoplay: {
+            delay: 2000,
+            disableOnInteraction: false,
+        },
+    });
 };
 
 // Social Media Links
@@ -128,14 +147,38 @@ const socialLinks = {
 };
 
 // Room data for Rokami Loft
-// Currency conversion rates (example rates, should be updated with real-time rates in production)
-const exchangeRates = {
+// Currency conversion rates - will be updated with real-time rates
+let exchangeRates = {
     'KES': 1,             // Kenyan Shilling (base currency)
-    'USD': 0.0077,        // 1 KES = 0.0077 USD (example rate)
-    'EUR': 0.0071,        // 1 KES = 0.0071 EUR (example rate)
-    'GBP': 0.0061,        // 1 KES = 0.0061 GBP (example rate)
-    'ZAR': 0.14,          // 1 KES = 0.14 ZAR (example rate)
+    'USD': 0.0077,        // 1 KES = 0.0077 USD (fallback rate)
+    'EUR': 0.0071,        // 1 KES = 0.0071 EUR (fallback rate)
+    'GBP': 0.0061,        // 1 KES = 0.0061 GBP (fallback rate)
+    'ZAR': 0.14,          // 1 KES = 0.14 ZAR (fallback rate)
 };
+
+// Fetch real-time exchange rates
+const fetchExchangeRates = async () => {
+    try {
+        // Using exchangerate-api.com free tier (or similar service)
+        const response = await fetch('https://api.exchangerate-api.com/v4/latest/KES');
+        const data = await response.json();
+        if (data && data.rates) {
+            exchangeRates = {
+                'KES': 1,
+                'USD': data.rates.USD || 0.0077,
+                'EUR': data.rates.EUR || 0.0071,
+                'GBP': data.rates.GBP || 0.0061,
+                'ZAR': data.rates.ZAR || 0.14,
+            };
+            console.log('Exchange rates updated:', exchangeRates);
+        }
+    } catch (error) {
+        console.log('Using fallback exchange rates');
+    }
+};
+
+// Fetch rates on page load
+fetchExchangeRates();
 
 const rooms = [
     {
@@ -495,11 +538,20 @@ const updatePrices = (currency) => {
     document.querySelectorAll('.room-card').forEach((card, index) => {
         const room = rooms[index];
         const convertedPrice = convertPrice(room.price, room.currency, currency);
+        
+        // Update badge price
         const priceElement = card.querySelector('.room-price');
         if (priceElement) {
             priceElement.innerHTML = `${formatCurrency(convertedPrice, currency)} <small>/ night</small>`;
         }
-    });};
+        
+        // Update inline price display
+        const priceDisplay = card.querySelector('.room-price-display');
+        if (priceDisplay) {
+            priceDisplay.innerHTML = `${formatCurrency(convertedPrice, currency)} <small>/ night</small>`;
+        }
+    });
+};
 
 // Function to generate star rating HTML
 const getStarRating = (rating) => {
@@ -519,21 +571,7 @@ const renderRooms = () => {
     const roomsContainer = document.getElementById('rooms-container');
     if (!roomsContainer) return;
 
-    // Add currency selector
-    const currencySelector = `
-        <div class="currency-selector" style="margin-bottom: 2rem; text-align: right;">
-            <label for="currency-select" style="margin-right: 0.5rem;">Currency:</label>
-            <select id="currency-select" class="form-control" style="padding: 0.5rem; border-radius: 4px; border: 1px solid #ddd;">
-                <option value="KES">KES</option>
-                <option value="USD">USD</option>
-                <option value="EUR">EUR</option>
-                <option value="GBP">GBP</option>
-                <option value="ZAR">ZAR</option>
-            </select>
-        </div>
-    `;
-
-    roomsContainer.innerHTML = currencySelector + rooms.map(room => `
+    roomsContainer.innerHTML = rooms.map(room => `
         <div class="room-card" data-aos="fade-up">
             <div class="room-image" style="background-image: url('assets/images/${room.image}')">
                 <span class="room-price" data-original-price="${room.price}" data-currency="${room.currency}">
@@ -549,13 +587,27 @@ const renderRooms = () => {
                 <div class="room-amenities">
                     ${room.amenities.map(amenity => `<span class="amenity">${amenity}</span>`).join('')}
                 </div>
+                <div class="room-price-row">
+                    <div class="price-with-currency">
+                        <span class="room-price-display" data-original-price="${room.price}" data-currency="${room.currency}">
+                            ${formatCurrency(room.price, room.currency)} <small>/ night</small>
+                        </span>
+                        <select class="currency-select-inline" onchange="updatePrices(this.value)">
+                            <option value="KES">KES</option>
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="GBP">GBP</option>
+                            <option value="ZAR">ZAR</option>
+                        </select>
+                    </div>
+                </div>
                 <a href="#booking" class="btn btn-primary">BOOK NOW</a>
             </div>
         </div>
     `).join('');
     
-    // Render room sections after rooms
-    renderRoomSections();
+    // Room sections commented out as requested
+    // renderRoomSections();
 };
 
 // Render room sections (Living Room, Bedroom, etc.)
@@ -900,22 +952,22 @@ document.addEventListener('DOMContentLoaded', () => {
     renderGallery();
     renderReviews();
     initReviewsSlider();
+    initAboutGallerySlider(); // Initialize about section gallery slider
     
-    // Initialize currency selector
-    const currencySelect = document.getElementById('currency-select');
-    if (currencySelect) {
-        // Set default currency
+    // Initialize inline currency selectors
+    document.querySelectorAll('.currency-select-inline').forEach(select => {
         let selectedCurrency = localStorage.getItem('preferredCurrency') || 'KES';
-        currencySelect.value = selectedCurrency;
+        select.value = selectedCurrency;
         updatePrices(selectedCurrency);
         
-        // Add event listener for currency change
-        currencySelect.addEventListener('change', (e) => {
+        select.addEventListener('change', (e) => {
             const newCurrency = e.target.value;
             localStorage.setItem('preferredCurrency', newCurrency);
+            // Sync all currency selectors
+            document.querySelectorAll('.currency-select-inline').forEach(s => s.value = newCurrency);
             updatePrices(newCurrency);
         });
-    }
+    });
     
     // Initialize AOS (Animate On Scroll)
     if (typeof AOS !== 'undefined') {
