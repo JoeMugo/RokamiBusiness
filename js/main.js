@@ -120,10 +120,17 @@ const initAboutGallerySlider = () => {
     if (!aboutGalleryWrapper) return;
 
     // Add all gallery images to the about slider
-    galleryImages.forEach(image => {
+    galleryImages.forEach((image, index) => {
         const slide = document.createElement('div');
         slide.className = 'swiper-slide';
-        slide.innerHTML = `<img src="assets/images/${image}" alt="Gallery Image" loading="lazy">`;
+        slide.dataset.index = index;
+        slide.innerHTML = `
+            <img src="assets/images/${image}" alt="Gallery Image" loading="lazy">
+            <div class="gallery-slide-overlay">
+                <i class="fas fa-search-plus"></i>
+                <span>Click to view</span>
+            </div>
+        `;
         aboutGalleryWrapper.appendChild(slide);
     });
 
@@ -136,6 +143,39 @@ const initAboutGallerySlider = () => {
             disableOnInteraction: false,
         },
     });
+
+    // Add click handler for lightbox
+    aboutGalleryWrapper.addEventListener('click', (e) => {
+        const slide = e.target.closest('.swiper-slide');
+        if (slide) {
+            const index = parseInt(slide.dataset.index) || 0;
+            openGalleryLightbox(index);
+        }
+    });
+};
+
+// Open gallery lightbox from about section
+const openGalleryLightbox = (index) => {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const lightboxPrev = document.getElementById('lightbox-prev');
+    const lightboxNext = document.getElementById('lightbox-next');
+    
+    if (!lightbox) return;
+    
+    currentImageIndex = index;
+    const imagePath = `assets/images/${galleryImages[currentImageIndex]}`;
+    const imageName = galleryImages[currentImageIndex].replace('gallery/', '').replace(/%20/g, ' ').replace('.jpeg', '').replace('.jpg', '');
+    
+    lightboxImg.src = imagePath;
+    lightboxCaption.textContent = imageName;
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    // Show navigation for gallery
+    lightboxPrev.style.display = '';
+    lightboxNext.style.display = '';
 };
 
 // Social Media Links
@@ -233,57 +273,53 @@ const roomSections = [
     }
 ];
 
-// What this place offers - Amenities
+// What this place offers - Amenities (consolidated into 4 cards)
 const amenities = {
-    scenicViews: {
-        title: 'Scenic Views',
-        icon: 'fas fa-mountain',
-        items: ['City skyline view']
+    essentials: {
+        title: 'Essentials & Comfort',
+        icon: 'fas fa-bed',
+        items: [
+            'City skyline view',
+            'Smart TV',
+            'High-speed WiFi',
+            'Dedicated workspace',
+            'Essentials (Towels, bed sheets, soap)',
+            'Extra pillows and blankets',
+            'Iron & Clothing storage'
+        ]
     },
     bathroom: {
-        title: 'Bathroom',
+        title: 'Bathroom & Kitchen',
         icon: 'fas fa-bath',
-        items: ['Cleaning products', 'Shampoo', 'Conditioner', 'Body soap', 'Bidet', 'Hot water', 'Shower gel']
+        items: [
+            'Cleaning products & Shampoo',
+            'Conditioner & Body soap',
+            'Hot water & Shower gel',
+            'Fully equipped kitchen',
+            'Space to cook your own meals'
+        ]
     },
-    bedroomLaundry: {
-        title: 'Bedroom & Laundry',
-        icon: 'fas fa-bed',
-        items: ['Essentials (Towels, bed sheets, soap, toilet paper)', 'Hangers', 'Bed linens', 'Extra pillows and blankets', 'Iron', 'Clothing storage']
-    },
-    entertainment: {
-        title: 'Entertainment',
-        icon: 'fas fa-tv',
-        items: ['Smart TV']
-    },
-    homeSafety: {
-        title: 'Home Safety',
+    safety: {
+        title: 'Safety & Parking',
         icon: 'fas fa-shield-alt',
-        items: ['Fire extinguisher']
-    },
-    internetOffice: {
-        title: 'Internet & Office',
-        icon: 'fas fa-wifi',
-        items: ['High-speed WiFi', 'Dedicated workspace']
-    },
-    kitchen: {
-        title: 'Kitchen & Dining',
-        icon: 'fas fa-utensils',
-        items: ['Fully equipped kitchen', 'Space where guests can cook their own meals']
-    },
-    location: {
-        title: 'Location Features',
-        icon: 'fas fa-map-marker-alt',
-        items: ['Laundromat nearby']
-    },
-    parking: {
-        title: 'Parking & Facilities',
-        icon: 'fas fa-parking',
-        items: ['Free parking on premises', '2 parking floors', 'Elevator/Lift access']
+        items: [
+            'Fire extinguisher',
+            '24/7 Security',
+            'Free parking on premises',
+            '2 parking floors',
+            'Elevator/Lift access'
+        ]
     },
     services: {
-        title: 'Services',
+        title: 'Services & Location',
         icon: 'fas fa-concierge-bell',
-        items: ['Self check-in with lockbox']
+        items: [
+            'Self check-in with lockbox',
+            'Laundromat nearby',
+            'Near Two Rivers Mall',
+            'Near Village Market',
+            'Near Westlands & Gigiri'
+        ]
     }
 };
 
