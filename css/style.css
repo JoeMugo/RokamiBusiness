@@ -517,21 +517,30 @@ ul {
 
 /* About Gallery Slider */
 .about-gallery-slider {
-    height: 500px;
+    width: 100%;
+    max-width: 500px;
+    height: 400px;
     border-radius: var(--border-radius-lg);
     overflow: hidden;
     box-shadow: 0 20px 60px rgba(11, 43, 57, 0.15);
 }
 
-.about-gallery-slider .swiper-slide {
+.about-gallery-slider .swiper-wrapper {
     width: 100%;
     height: 100%;
+}
+
+.about-gallery-slider .swiper-slide {
+    width: 100% !important;
+    height: 100% !important;
+    position: relative;
 }
 
 .about-gallery-slider .swiper-slide img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
 }
 
 .gallery-slide-overlay {
@@ -540,7 +549,7 @@ ul {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(11, 43, 57, 0.3);
+    background: rgba(11, 43, 57, 0.4);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -549,6 +558,7 @@ ul {
     transition: opacity 0.3s ease;
     cursor: pointer;
     color: var(--white);
+    z-index: 10;
 }
 
 .gallery-slide-overlay i {
@@ -563,10 +573,6 @@ ul {
 
 .about-gallery-slider .swiper-slide:hover .gallery-slide-overlay {
     opacity: 1;
-}
-
-.about-gallery-slider .swiper-slide {
-    position: relative;
 }
 
 .about-image::after {
@@ -719,11 +725,16 @@ ul {
 
 /* Rooms Section */
 #rooms {
-    background: linear-gradient(180deg, var(--white) 0%, var(--light) 100%);
+    background: var(--white);
 }
 
 #rooms .section-header {
     margin-bottom: 1.5rem;
+}
+
+/* Host Section - Different shade */
+#host {
+    background: var(--light);
 }
 
 .currency-selector {
@@ -1377,20 +1388,24 @@ ul {
 /* Testimonials Section */
 #reviews {
     background: linear-gradient(180deg, var(--white) 0%, var(--light) 100%);
+    padding: 3rem 0;
 }
 
 .reviews-slider {
-    padding: 2rem 0;
+    padding: 1rem 0;
 }
 
 .review-card {
     background: var(--white);
     border-radius: var(--border-radius-lg);
-    padding: 2rem;
+    padding: 1.25rem;
     box-shadow: 0 10px 40px rgba(11, 43, 57, 0.08);
-    margin: 1rem;
+    margin: 0.5rem;
     border: 1px solid rgba(154, 82, 17, 0.1);
     position: relative;
+    min-height: auto;
+    max-height: 280px;
+    overflow: hidden;
 }
 
 .review-source {
@@ -1493,19 +1508,28 @@ ul {
 
 .review-text {
     color: #444;
-    line-height: 1.7;
-    margin-bottom: 1rem;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+    max-height: 80px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
 
 .review-text p {
     font-style: italic;
+    margin: 0;
 }
 
 .review-date {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--gray);
     border-top: 1px solid var(--light-gray);
-    padding-top: 1rem;
+    padding-top: 0.5rem;
+    margin-top: auto;
 }
 
 /* Booking Section */
